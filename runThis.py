@@ -156,30 +156,26 @@ def tableCreation(data):
             tables_dict[unique_id] = pd.concat([tables_dict[unique_id], new_row], ignore_index=True)
         else:
             tables_dict[unique_id] = pd.DataFrame([[request_removed, response_removed]], columns=['request', 'response'])
-    # for i in tables_dict:
-    #     if tables_dict[i].shape[0] < 5:
-    #         print(f"WARNING: Table size for the unique_id {i} is small. Prediction will be bad. Do you want to continue? (yes/no)")
-    #         answer = input()
-    #         if answer == "no":
-    #             print(f"You terminated the process, come back with updated data for {i}")
-    #             return -1
+    for i in tables_dict:
+        if tables_dict[i].shape[0] < 5:
+            print(f"WARNING: Table size for the unique_id {i} is less than 5. Prediction will be bad. Do you want to continue? (yes/no)")
+            answer = input()
+            if answer == "no":
+                print(f"You terminated the process, come back with updated data for {i}")
+                return -1
     return tables_dict
         
-def dataCollection():
+def dataCollection(path):
     """
     This encapsulates everything we want from the "data" folder. This function can be imported into wherever needed.
     It reads the data from the csv file, checks if the JSON is formatted correctly, and creates tables based on the unique_id.
     
-    TODO:
-    THE PATH FOR THE DATA COLLECTION CAN BE PASSED DIRECTLY HERE
-    
     Parameters:
-    None
+    path: path to the csv file
     
     Returns:
     dictionaryofTables: dictionary with the unique_id as the key and the flattened JSON request and responses corresponding to that unique_id
     """
-    path = "data/noErrors.csv"
     data = readData(path)
     dictionaryofTables = tableCreation(data)
     return dictionaryofTables
@@ -189,9 +185,6 @@ def trainingOneUniqueId(df):
     This function is used to train the model using the data provided in the dataframe which corresponds to a unique ID.
     The function uses the data to form clusters of requests and then formulates the request prototype for each cluster.
     
-    COMMENTING FOR DEBUGGING:
-    If there is only one req, resp pair in the table then it returns a warning
-    
     Parameters:
     df (DataFrame): The dataframe containing the data for a unique ID
     
@@ -200,13 +193,14 @@ def trainingOneUniqueId(df):
     returns the dataframe and the request prototype, entropy and weightage for each cluster in this particular unique ID.
     """
     if df.shape[0]==1:
-        # print("WARNING: You only have one request in this method+path combo, it is strongly suggested you add more (ignore/exit)")
-        # answer = input()
-        # if answer == "exit":
-        #     return -1
+        print("WARNING: You only have one request in this method+path combo, it is strongly suggested you add more (ignore/exit)")
+        print("\nYET TO BE DEBUGGED. This will return an error, you should exit and add more data\n")
+        answer = input()
+        if answer == "exit":
+            return -1
         onlyReqInTable = df.iloc[0,0]
         print(f"\nRequest Prototype for this cluster: {onlyReqInTable}\nEntropy: {[0]*len(onlyReqInTable)}\nWeightage: {[1]*len(onlyReqInTable)}")
-        return [onlyReqInTable,[0]*len(onlyReqInTable),[1]*len(onlyReqInTable),df]
+        return [[onlyReqInTable,[0]*len(onlyReqInTable),[1]*len(onlyReqInTable), 0],df]
     distance_matrix = [[0]*len(df) for _ in range(len(df))]
     for index1, rowdata1 in df.iterrows():
         for index2, rowdata2 in df.iterrows():
@@ -228,19 +222,18 @@ def trainingOneUniqueId(df):
         print(f"\nRequest Prototype for this cluster:\n {oneRequestPrototypeInfo[0]}\nEntropy: {oneRequestPrototypeInfo[1]}\nWeightage: {oneRequestPrototypeInfo[2]}\nData points index from df in the cluster: {oneRequestPrototypeInfo[3]}")
     return [allRequestPrototypesInfoForThisUniqueID, df]
 
-def trainingEntireData():
+def trainingEntireData(path):
     """
     This will create a dicitonary of all the unique_ids and their corresponding request prototypes, entropy and weightage.
-    This is then stored in pickle format for future use so that we don't have to train the model again.
     
     Parameters:
-    None
+    path: path to the csv file
     
     Returns:
     allRequestPrototypesInfo (Dict): A dictionary containing the unique_id as the key and the request prototype, entropy and weightage for each cluster in that unique_id.
     """
     allRequestPrototypesInfo = {}
-    dataDictionary = dataCollection()
+    dataDictionary = dataCollection(path)
     for unique_id, df in dataDictionary.items():
         print(f"\nTraining for unique_id: {unique_id}")
         allRequestPrototypesInfo = {**allRequestPrototypesInfo, unique_id: trainingOneUniqueId(df)}
@@ -321,7 +314,7 @@ def symmetricFieldIdentification(centroidReq, centroidResp, request):
     
     return generatedResponse
 
-def centroidIdentification(cluster, request):
+def centroidIdentification(cluster, request, loaded_picklefilename):
     """
     This function identifies the centroid of the cluster and then uses the centroid to identify the response.
     If the centroid is the same as the request, it returns the response corresponding to the centroid.
@@ -337,7 +330,7 @@ def centroidIdentification(cluster, request):
     """
     request_removed_original, unique_id = removeRequestNesting_for_data_loading(request)
     request_removed_original = json.dumps(request_removed_original)
-    allPrototypesAndReqRespData = load_from_pickle('allPrototypes.pkl')
+    allPrototypesAndReqRespData = load_from_pickle(loaded_picklefilename+'.pkl')
     if unique_id in allPrototypesAndReqRespData:
         RequestPrototypeInfo = allPrototypesAndReqRespData[unique_id][0]
         # print(len(RequestPrototypeInfo))
@@ -364,7 +357,7 @@ def centroidIdentification(cluster, request):
         print("\nOOPS, the centroid doesn't exist in the training data, let's try to generate the response using symmetric field identification")
         return symmetricFieldIdentification(oneRequestReqRespData.iloc[cluster[score.index(max(score))],0],oneRequestReqRespData.iloc[cluster[score.index(max(score))],1], request_removed_original)
 
-def get_cluster(request, path_to_dataset):
+def get_cluster(request, loaded_picklefilename):
     """
     This function takes in a request and returns the response from the dictionary of allPrototypes.
     It generates a response if one does not already exist - if an exact match is not found it returns the exact match
@@ -381,7 +374,7 @@ def get_cluster(request, path_to_dataset):
     request_removed = json.dumps(request_removed)
     # BELOW LINE NEEDS TO BE DEALT WITH (DOCSTRING)
     request_removed = request_removed.replace(" ", "")
-    allPrototypesAndReqRespData = load_from_pickle('allPrototypes.pkl')
+    allPrototypesAndReqRespData = load_from_pickle(loaded_picklefilename+".pkl")
     ans=inf
     closestMatchingCluster = -1
     if unique_id in allPrototypesAndReqRespData:
@@ -411,34 +404,64 @@ def get_cluster(request, path_to_dataset):
         print("\nThere is no training data corresponding to this method+path combo, please update the training data\n\n")
         return -1
 
+def trainingEncapsulated(path, pickleFileName):
+    """
+    Function to be called when training the data 
+    
+    Parameters:
+    path: path to the csv file
+    pickleFileName: name of the pickle file to save the data to - do not add ".pkl" extension - already taken care of
+    
+    Returns:
+    None
+    """
+    save_to_pickle(trainingEntireData(path), pickleFileName+".pkl")
+    
+# IGNORE EVERYTHING ABOVE THIS
+# ------------------------------------------------------------------------------------------------------------------------
+# BUGS REMAINING
+# 1) For uid with only one cluster. need to edit return [[onlyReqInTable,[0]*len(onlyReqInTable),[1]*len(onlyReqInTable), 0],df]
+# 2) For empty {} in the request, it is not being handled properly, due to the flattening library
+# 3) Deal with whitespaces within the JSON eg. Yash Mundada is the value, right now it'll beome YashMundada
+# ------------------------------------------------------------------------------------------------------------------------
+# to train - comment out everything else below the dashed line except the line with trainingEncapsulated and path
+# to get response comment out trainngEncapsulated and uncomment all other lines below the dashed line
+# to run either training or response, go to service-virtualisation-final and run the command "python runThis.py"
 
+# ------------------------------------------------------------------------------------------------------------------------
+# always need
+# ------------------------------------------------------------------------------------------------------------------------
+# don't add the .pkl extension eg.
+# loaded_picklefilename = "testing1"
+# not loaded_picklefilename = "testing1.pkl"
+loaded_picklefilename = "testing1"
+# ------------------------------------------------------------------------------------------------------------------------
+# for training - comment out when not training
+# ------------------------------------------------------------------------------------------------------------------------
+# path = "data/noErrors.csv"
+# trainingEncapsulated(path, loaded_picklefilename)
+# ------------------------------------------------------------------------------------------------------------------------
+# everything below for normal running - comment out when not running
+# ------------------------------------------------------------------------------------------------------------------------
 req = {
   "request": {
-  "method": "PUT",
-  "path": "/pet",
-  "query": {},
+  "method": "POST",
+  "path": "/user",
+  "query": {
+  "username": "nilesh"
+  },
   "headers": {
   "Accept": "application/json"
   },
   "body": {
-  "id": 831712398123789123878,
-  "category": {
-  "id": 0,
-  "name": "string"
-  },
-  "name": "test1",
-  "photoUrls": [
-  "string"
-  ],
-  "tags": [
-  {
-  "id": 0,
-  "name": "ya"
-  }
-  ],
-  "status": "pending"
+  "username": "nilesh",
+  "firstName": "nilesh",
+  "lastName": "c",
+  "email": "pqr@abc.com",
+  "password": "testpass",
+  "phone": "12313",
+  "userStatus": 0
   }
   }
-  }
-
-print(f"\nTHE RESPONSE IS:\n{(reconstructResponse(centroidIdentification(get_cluster(req, "data/noErrors.csv")[3], req)))}\n\n")
+ }
+print(f"\nTHE RESPONSE IS:\n{(reconstructResponse(centroidIdentification(get_cluster(req, loaded_picklefilename)[3], req,loaded_picklefilename)))}\n\n")
