@@ -404,6 +404,7 @@ def get_cluster(request, loaded_picklefilename):
         print("\nThere is no training data corresponding to this method+path combo, please update the training data\n\n")
         return -1
 
+# added a change to include the models folder here
 def trainingEncapsulated(path, pickleFileName):
     """
     Function to be called when training the data 
@@ -415,9 +416,11 @@ def trainingEncapsulated(path, pickleFileName):
     Returns:
     None
     """
-    save_to_pickle(trainingEntireData(path), pickleFileName+".pkl")
+    save_to_pickle(trainingEntireData(path),"/Users/yashmundada/Desktop/service-virtualisation-final/models/"+ pickleFileName+".pkl")
     
 # IGNORE EVERYTHING ABOVE THIS
+
+
 # ------------------------------------------------------------------------------------------------------------------------
 # BUGS REMAINING
 # 1) For uid with only one cluster. need to edit return [[onlyReqInTable,[0]*len(onlyReqInTable),[1]*len(onlyReqInTable), 0],df]
@@ -427,7 +430,6 @@ def trainingEncapsulated(path, pickleFileName):
 # to train - comment out everything else below the dashed line except the line with trainingEncapsulated and path
 # to get response comment out trainngEncapsulated and uncomment all other lines below the dashed line
 # to run either training or response, go to service-virtualisation-final and run the command "python runThis.py"
-
 # ------------------------------------------------------------------------------------------------------------------------
 # always need
 # ------------------------------------------------------------------------------------------------------------------------
@@ -443,25 +445,28 @@ loaded_picklefilename = "testing1"
 # ------------------------------------------------------------------------------------------------------------------------
 # everything below for normal running - comment out when not running
 # ------------------------------------------------------------------------------------------------------------------------
-req = {
-  "request": {
-  "method": "POST",
-  "path": "/user",
-  "query": {
-  "username": "nilesh"
-  },
-  "headers": {
-  "Accept": "application/json"
-  },
-  "body": {
-  "username": "nilesh",
-  "firstName": "nilesh",
-  "lastName": "c",
-  "email": "pqr@abc.com",
-  "password": "testpass",
-  "phone": "12313",
-  "userStatus": 0
-  }
-  }
- }
-print(f"\nTHE RESPONSE IS:\n{(reconstructResponse(centroidIdentification(get_cluster(req, loaded_picklefilename)[3], req,loaded_picklefilename)))}\n\n")
+# req = {
+#   "request": {
+#   "method": "POST",
+#   "path": "/user",
+#   "query": {
+#   "username": "nilesh"
+#   },
+#   "headers": {
+#   "Accept": "application/json"
+#   },
+#   "body": {
+#   "username": "nilesh",
+#   "firstName": "nilesh",
+#   "lastName": "c",
+#   "email": "pqr@abc.com",
+#   "password": "testpass",
+#   "phone": "12313",
+#   "userStatus": 0
+#   }
+#   }
+#  }
+def final(req, loaded_picklefilename):
+    loaded_picklefilename = "/Users/yashmundada/Desktop/service-virtualisation-final/models/"+loaded_picklefilename
+    print(f"\nTHE RESPONSE IS:\n{(reconstructResponse(centroidIdentification(get_cluster(req, loaded_picklefilename)[3], req,loaded_picklefilename)))}\n\n")
+    return (reconstructResponse(centroidIdentification(get_cluster(req, loaded_picklefilename)[3], req,loaded_picklefilename)))
