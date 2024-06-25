@@ -1,0 +1,722 @@
+REQUEST,RESPONSE
+"{
+  ""request"": {
+  ""method"": ""GET"",
+  ""path"": ""/pet"",
+  ""query"": {
+  ""petId"": ""9""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9,
+  ""category"": {
+  ""id"": 4,
+  ""name"": ""Lions""
+  },
+  ""name"": ""Lion 3"",
+  ""photoUrls"": [
+  ""url1"",
+  ""url2""
+  ],
+  ""tags"": [
+  {
+  ""id"": 1,
+  ""name"": ""tag3""
+  },
+  {
+  ""id"": 2,
+  ""name"": ""tag4""
+  }
+  ],
+  ""status"": ""available""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""GET"",
+  ""path"": ""/pet"",
+  ""query"": {
+  ""petId"": ""10""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 10,
+  ""category"": {
+  ""id"": 1,
+  ""name"": ""Dogs""
+  },
+  ""name"": ""doggie"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""string""
+  }
+  ],
+  ""status"": ""string""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""GET"",
+  ""path"": ""/pet"",
+  ""query"": {
+  ""petId"": ""&&&""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": ""bad request"",
+  ""statuscode"": 400
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""GET"",
+  ""path"": ""/pet"",
+  ""query"": {
+  ""tags"": ""string""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": [
+  {
+  ""id"": 11,
+  ""category"": {
+  ""id"": 1,
+  ""name"": ""Dogs""
+  },
+  ""name"": ""dogg1e"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""string""
+  }
+  ],
+  ""status"": ""available""
+  },
+  {
+  ""id"": 6739257,
+  ""category"": {
+  ""id"": 10,
+  ""name"": ""string""
+  },
+  ""name"": ""Changed Kitty Price"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 10,
+  ""name"": ""string""
+  }
+  ],
+  ""status"": ""pending""
+  },
+  {
+  ""id"": 10,
+  ""category"": {
+  ""id"": 1,
+  ""name"": ""Dogs""
+  },
+  ""name"": ""doggie"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""string""
+  }
+  ],
+  ""status"": ""string""
+  }
+  ],
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""GET"",
+  ""path"": ""/user"",
+  ""query"": {
+  ""username"": ""yash""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854755840,
+  ""username"": ""yash"",
+  ""firstName"": ""yash"",
+  ""lastName"": ""m"",
+  ""email"": ""abc@abc.com"",
+  ""password"": ""test"",
+  ""phone"": ""123131"",
+  ""userStatus"": 0
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""GET"",
+  ""path"": ""/user"",
+  ""query"": {
+  ""username"": ""nilesh""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854755841,
+  ""username"": ""nilesh"",
+  ""firstName"": ""nilesh"",
+  ""lastName"": ""c"",
+  ""email"": ""test@test.com"",
+  ""password"": ""test"",
+  ""phone"": ""8989898"",
+  ""userStatus"": 1
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""PUT"",
+  ""path"": ""/user"",
+  ""query"": {
+  ""username"": ""yash""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854755840,
+  ""username"": ""yash"",
+  ""firstName"": ""yash"",
+  ""lastName"": ""m"",
+  ""email"": ""pqr@abc.com"",
+  ""password"": ""newpass"",
+  ""phone"": ""998989899"",
+  ""userStatus"": 0
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""code"": 200,
+  ""type"": ""unknown"",
+  ""message"": ""9223372036854755840""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""PUT"",
+  ""path"": ""/user"",
+  ""query"": {
+  ""username"": ""nilesh""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854755841,
+  ""username"": ""nilesh"",
+  ""firstName"": ""nilesh"",
+  ""lastName"": ""c"",
+  ""email"": ""pqr@abc.com"",
+  ""password"": ""testpass"",
+  ""phone"": ""12313"",
+  ""userStatus"": 0
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""code"": 200,
+  ""type"": ""unknown"",
+  ""message"": ""9223372036854755841""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""POST"",
+  ""path"": ""/user"",
+  ""query"": {
+  ""username"": ""yash""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""username"": ""yash"",
+  ""firstName"": ""yash"",
+  ""lastName"": ""m"",
+  ""email"": ""pqr@abc.com"",
+  ""password"": ""newpass"",
+  ""phone"": ""998989899"",
+  ""userStatus"": 0
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""code"": 200,
+  ""type"": ""unknown"",
+  ""message"": ""9223372036854755840""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""POST"",
+  ""path"": ""/user"",
+  ""query"": {
+  ""username"": ""nilesh""
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""username"": ""nilesh"",
+  ""firstName"": ""nilesh"",
+  ""lastName"": ""c"",
+  ""email"": ""pqr@abc.com"",
+  ""password"": ""testpass"",
+  ""phone"": ""12313"",
+  ""userStatus"": 0
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""code"": 200,
+  ""type"": ""unknown"",
+  ""message"": ""9223372036854755841""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""GET"",
+  ""path"": ""/store/inventory"",
+  ""query"": {
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""pinding"": 1,
+  ""sold"": 8,
+  ""UpdatedStatus"": 9,
+  ""string"": 636,
+  ""unavailable"": 1,
+  ""pending"": 7,
+  ""available"": 326,
+  ""active"": 1,
+  ""Pending"": 1
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""POST"",
+  ""path"": ""/pet"",
+  ""query"": {},
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 0,
+  ""category"": {
+  ""id"": 0,
+  ""name"": ""string""
+  },
+  ""name"": ""test"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""tests""
+  }
+  ],
+  ""status"": ""available""
+  }
+  }
+  }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854597227,
+  ""category"": {
+  ""id"": 0,
+  ""name"": ""string""
+  },
+  ""name"": ""test"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""tests""
+  }
+  ],
+  ""status"": ""available""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""POST"",
+  ""path"": ""/pet"",
+  ""query"": {},
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 0,
+  ""category"": {
+  ""id"": 0,
+  ""name"": ""string""
+  },
+  ""name"": ""newpet"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""pets""
+  }
+  ],
+  ""status"": ""sold""
+  }
+  }
+  }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854597229,
+  ""category"": {
+  ""id"": 0,
+  ""name"": ""string""
+  },
+  ""name"": ""newpet"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""pets""
+  }
+  ],
+  ""status"": ""sold""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""PUT"",
+  ""path"": ""/pet"",
+  ""query"": {},
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854597227,
+  ""category"": {
+  ""id"": 0,
+  ""name"": ""string""
+  },
+  ""name"": ""test1"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""abc""
+  }
+  ],
+  ""status"": ""sold""
+  }
+  }
+  }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854597227,
+  ""category"": {
+  ""id"": 0,
+  ""name"": ""string""
+  },
+  ""name"": ""test1"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""abc""
+  }
+  ],
+  ""status"": ""sold""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""PUT"",
+  ""path"": ""/pet"",
+  ""query"": {},
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854597229,
+  ""category"": {
+  ""id"": 0,
+  ""name"": ""string""
+  },
+  ""name"": ""testpet"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""Kpop""
+  }
+  ],
+  ""status"": ""sold""
+  }
+  }
+  }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854597229,
+  ""category"": {
+  ""id"": 0,
+  ""name"": ""string""
+  },
+  ""name"": ""testpet"",
+  ""photoUrls"": [
+  ""string""
+  ],
+  ""tags"": [
+  {
+  ""id"": 0,
+  ""name"": ""Kpop""
+  }
+  ],
+  ""status"": ""sold""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""DELETE"",
+  ""path"": ""/pet"",
+  ""query"": {
+  ""id"": 9223372036854597229
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""code"": 200,
+  ""type"": ""unknown"",
+  ""message"": ""9223372036854597229""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""DELETE"",
+  ""path"": ""/pet"",
+  ""query"": {
+  ""id"": 9223372036854597227
+  },
+  ""headers"": {
+  ""Accept"": ""application/json""
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""code"": 200,
+  ""type"": ""unknown"",
+  ""message"": ""9223372036854597227""
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""POST"",
+  ""path"": ""/pet"",
+  ""query"": {},
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 0,
+  ""petId"": 10,
+  ""quantity"": 10,
+  ""shipDate"": ""2024-08-01T10:28:00.196Z"",
+  ""status"": ""placed"",
+  ""complete"": true
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854755005,
+  ""petId"": 10,
+  ""quantity"": 10,
+  ""shipDate"": ""2024-08-01T10:28:00.196+0000"",
+  ""status"": ""placed"",
+  ""complete"": true
+  },
+  ""statuscode"": 200
+  }
+ }"
+"{
+  ""request"": {
+  ""method"": ""POST"",
+  ""path"": ""/pet"",
+  ""query"": {},
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 0,
+  ""petId"": 11,
+  ""quantity"": 100,
+  ""shipDate"": ""2024-04-01T10:28:00.196Z"",
+  ""status"": ""placed"",
+  ""complete"": true
+  }
+  }
+ }","{
+  ""response"": {
+  ""headers"": {
+  ""Accept"": ""application/json""
+  },
+  ""body"": {
+  ""id"": 9223372036854755008,
+  ""petId"": 11,
+  ""quantity"": 100,
+  ""shipDate"": ""2024-04-01T10:28:00.196+0000"",
+  ""status"": ""placed"",
+  ""complete"": true
+  },
+  ""statuscode"": 200
+  }
+ }"
